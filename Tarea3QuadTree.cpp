@@ -96,11 +96,11 @@ struct node
 };
 
 
-Matriz subMatriz(Matriz& A, int arri, int izq,int abj , int der)// Se le envia una matriz y te devuelve su 
+Matriz subMatriz(Matriz& A, int arri, int izq, int abj, int der)// Se le envia una matriz y te devuelve su 
 {                                   									// subMatriz dependiendo de posiciones
 	Matriz B;
-	int dim1 = abj-arri, dim2 = der-izq ;
-	B = ini(dim1,dim2);
+	int dim1 = abj - arri, dim2 = der - izq;
+	B = ini(dim1, dim2);
 	int x = arri, y = izq;
 	for (int i = 0; i < dim1; i++)
 	{
@@ -162,7 +162,7 @@ void imprimirQuad(node* raiz) //IMPRIME EL ARBOL POR NIVELES
 void QuadTree(Matriz& A, node* raiz)//FUNCION RECURSIVA QUE RECIVE UNA MATRIZ Y UN 
 {                                                                  // NODO E IRA CREANDO EL ARBOL HASTA ENCONTRAR
 	int dim1 = A.size();
-	
+
 	if (dim1 > 0)
 	{
 		int dim2 = A[0].size();                        // UNA MATRIZ DE DATOS IGUALES O SEA DE 2X2
@@ -190,10 +190,10 @@ void QuadTree(Matriz& A, node* raiz)//FUNCION RECURSIVA QUE RECIVE UNA MATRIZ Y 
 				}
 				else if (dim2 == 1 && dim1 > 1)
 				{
-					
+
 					Matriz B = subMatriz(A, 0, 0, dim1 / 2, dim2);
 					Matriz C = subMatriz(A, dim1 / 2, 0, dim1, dim2);
-					
+
 					raiz->uno = new node();
 					raiz->dos = new node();
 					QuadTree(B, raiz->uno);
@@ -234,12 +234,12 @@ void QuadTree(Matriz& A, node* raiz)//FUNCION RECURSIVA QUE RECIVE UNA MATRIZ Y 
 		}
 	}
 }
-void imprimir(Mat m, Matriz& A) 
+void imprimir(Mat m, Matriz& A)
 {
 	vector<int> aux;
-	for (int j = 0; j < m.rows; j++) 
+	for (int j = 0; j < m.rows; j++)
 	{
-		for (int i = 0; i < m.cols; i++) 
+		for (int i = 0; i < m.cols; i++)
 		{
 			int pixel = m.at<uchar>(j, i);
 			aux.push_back(pixel);
@@ -254,13 +254,14 @@ int main()
 	Matriz A;
 	//A = llenar(25,14);
 	//mostrar(A);
-	
-	Mat imagen = imread("Prueba.jpg");
-	
+	string nombre;
+	cout << "Introducir nombre de la imagen a procesar(Tiene que estar en la carpeta del programa): "; cin >> nombre;
+	Mat imagen = imread(nombre);
+
 	imshow("Prueba", imagen);
-	imprimir(imagen,A);
+	imprimir(imagen, A);
 	waitKey(0);
-	
+
 	node* raiz = new node();
 	QuadTree(A, raiz);
 	imprimirQuad(raiz);
